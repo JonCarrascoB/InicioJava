@@ -1,19 +1,25 @@
 package com.formacion.basico;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 
 public class AppVoluntarios {
 
+	// Declaramos los arrayList que se van a usar en este programa
 	static ArrayList<Person> alumnos = new ArrayList<Person>();
-	
+	static ArrayList<String> ranking = new ArrayList<String>();
+	// static HashMap<Integer, String> ranking = new HashMap <Integer, String>();
+
 	public static void main(String[] args) {
 
-		
-		//Iterator<Person> it = alumnos.iterator();
-		
+		// Insertamos a todos los alumnos de base en el arraylist Alumnos
 		Person p1 = new Person("Mounir", 0, 'h');
 		Person p2 = new Person("Andoni", 0, 'h');
 		Person p3 = new Person("Asier", 0, 'h');
@@ -45,6 +51,8 @@ public class AppVoluntarios {
 		alumnos.add(p14);
 		alumnos.add(p15);
 
+		// iniciamos el programa, cuyo menu se mete en un bucle hasta que el usuario
+		// indica la opcion de salida
 		int opcion;
 		Scanner sc = new Scanner(System.in);
 		do {
@@ -59,6 +67,11 @@ public class AppVoluntarios {
 
 	}
 
+	// Metodos que son llamados en el programa
+
+	/**
+	 * Metodo para que aparezca el menu de opciones en la consola
+	 */
 	public static void pintarOpcion() {
 		System.out.println("Inserte la opcion 1 para listar los alumnos y ver el Ranking.");
 		System.out.println("Inserte la opcion 2 para crear un alumno.");
@@ -68,6 +81,12 @@ public class AppVoluntarios {
 
 	}
 
+	/**
+	 * Metodo para hacer que se lancen las opciones elegidas por el usuario
+	 * 
+	 * @param opcion de las que se presentan en pantalla
+	 * @see pintarOpcion()
+	 */
 	private static void activarOpciones(int opcion) {
 		switch (opcion) {
 		case 1:
@@ -89,8 +108,11 @@ public class AppVoluntarios {
 
 	}
 
+	/**
+	 * Metodo para que salga el alumno voluntario de forma random
+	 */
 	private static void buscarVoluntario() {
-		int cont = 0;
+
 		int numero = (int) (Math.random() * alumnos.size());
 
 		for (int i = 0; i < alumnos.size(); i++) {
@@ -98,25 +120,30 @@ public class AppVoluntarios {
 			if (numero != i) {
 				System.out.println(i + " " + alumnos.get(i));
 			} else {
+				ranking.add(alumnos.get(i).getNombre());
 				System.out.println(" *** " + alumnos.get(i));
-				cont ++;
 			}
 		} // end for
 
 	}
 
+	/**
+	 * Metodo para eliminar a un alumno elegido por consola
+	 */
 	private static void eliminarAlumno() {
-		
+
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Inserte el nombre del alumno a eliminar: ");
 		String nombre = sc.nextLine();
 		alumnos.remove(nombre);
 
 	}
-/**
- * Metodo para añadir un nuevo alumno a la array
- * @return p1 un nuevo alumno
- */
+
+	/**
+	 * Metodo para añadir un nuevo alumno a la array
+	 * 
+	 * @return p1 un nuevo alumno
+	 */
 	private static void crearAlumno() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Inserte los datos para crear un nuevo Alumno: ");
@@ -130,15 +157,30 @@ public class AppVoluntarios {
 		alumnos.add(p1);
 	}
 
+	/**
+	 * Metodo para enlistar los alumnos segun el ranking de veces que ha salido
+	 * voluntario
+	 */
 	private static void listarAlumnos() {
-		if(!alumnos.isEmpty()) {
-			System.out.println("Los alumnos de la lista son: ");
-			for (int i = 0; i < alumnos.size(); i++) {
-				System.out.println(i + " " + alumnos.get(i));
+
+		Map<String, Integer> repeticiones = new TreeMap<String, Integer>();
+
+		for (String nombre : ranking) {
+			nombre = nombre.toLowerCase();
+			if (!repeticiones.containsKey(nombre)) {
+				repeticiones.put(nombre, new Integer(1));
+			} else {
+				repeticiones.put(nombre, new Integer(repeticiones.get(nombre).intValue() + 1));
 			}
-		} else {
-			System.out.println("No existen alumnos en la clase");
 		}
+		
+		System.out.println("El Ranking de voluntarios es: ");
+		Iterator it = repeticiones.keySet().iterator();
+		while (it.hasNext()) {
+			Object key = it.next();
+			System.out.println("El alumno: "+key+" ha salido voluntario "+repeticiones.get(key)+ " veces.");
+		}
+
 	}
 
 }

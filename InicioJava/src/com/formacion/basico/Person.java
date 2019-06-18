@@ -92,8 +92,8 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [nombre=" + nombre + ", edad=" + edad + ", altura=" + altura + ", peso=" + peso + ", ojos="
-				+ ojos + ", sexo=" + sexo + "]";
+		return "El alumno de nombre " + nombre + ", edad " + edad + ", altura " + altura + ", peso " + peso + ", ojos de color "
+				+ ojos + " y sexo " + sexo;
 	}
 
 }
