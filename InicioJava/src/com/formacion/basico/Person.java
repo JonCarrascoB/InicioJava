@@ -7,6 +7,7 @@ public class Person {
 	// Sobre cargar el constructor para tener una persona indicando el nombre la
 	// edad y el sexo
 
+	
 	// Atributos
 	private String nombre;
 	private int edad;
