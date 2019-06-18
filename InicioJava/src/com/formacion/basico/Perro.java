@@ -1,8 +1,12 @@
 package com.formacion.basico;
 
-public class Perro {
+import java.io.Serializable;
+
+public class Perro implements Serializable {
 	
-//Atributos privados para construir
+	private static final long serialVersionUID = 1L;
+	
+	//Atributos privados para construir
 	private String nombre;
 	private String raza;
 	private int edad;
