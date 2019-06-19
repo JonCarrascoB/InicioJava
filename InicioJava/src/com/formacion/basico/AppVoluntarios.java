@@ -3,6 +3,7 @@ package com.formacion.basico;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -48,8 +49,7 @@ public class AppVoluntarios {
 		int opcion;
 		Scanner sc = new Scanner(System.in);
 		do {
-			System.out.println("Bienvenido a la aplicacion de eleccion de voluntarios para leer");
-			System.out.println("Introduzca la opcion requerida del 1 al 5: ");
+
 			pintarOpcion();
 			opcion = Integer.parseInt(sc.nextLine());
 			activarOpciones(opcion);
@@ -65,11 +65,16 @@ public class AppVoluntarios {
 	 * Metodo para que aparezca el menu de opciones en la consola
 	 */
 	public static void pintarOpcion() {
-		System.out.println("Inserte la opcion 1 para listar los alumnos y ver el Ranking.");
-		System.out.println("Inserte la opcion 2 para crear un alumno.");
-		System.out.println("Inserte la opcion 3 para eliminar un alumno.");
-		System.out.println("Inserte la opcion 4 para buscar un voluntario");
-		System.out.println("Inserte la opcion 5 para salir de la aplicacion");
+		System.out.println("***************************************************************************");
+		System.out.println("**    Bienvenido a la aplicacion de eleccion de voluntarios para leer    **");
+		System.out.println("**            Introduzca la opcion requerida del 1 al 5:                 **");
+		System.out.println("***************************************************************************");
+		System.out.println("**    Inserte la opcion 1 para listar los alumnos segun el Ranking.      **");
+		System.out.println("**    Inserte la opcion 2 para crear un alumno.                          **");
+		System.out.println("**    Inserte la opcion 3 para eliminar un alumno.                       **");
+		System.out.println("**    Inserte la opcion 4 para buscar un voluntario                      **");
+		System.out.println("**    Inserte la opcion 5 para salir de la aplicacion                    **");
+		System.out.println("***************************************************************************");
 
 	}
 
@@ -108,13 +113,13 @@ public class AppVoluntarios {
 
 		do {
 			numero = (int) (Math.random() * alumnos.size());
-			alumnos.get(numero).setNumVecesLeer(alumnos.get(numero).getNumVecesLeer());
+			alumnos.get(numero).setNumVecesLeer(alumnos.get(numero).getNumVecesLeer() + 1);
 
-		} while (ULTIMO_VOLUNTARIO.equals(alumnos.get(numero).getNombre()));
+		} while (alumnos.get(numero).getNombre().equals(ULTIMO_VOLUNTARIO));
 		ULTIMO_VOLUNTARIO = alumnos.get(numero).getNombre();
 
 		System.out.println("El alumno que es voluntario es: " + alumnos.get(numero).getNombre());
-		// TODO que no se repita el mismo alumno
+
 	}
 
 	/**
@@ -125,8 +130,14 @@ public class AppVoluntarios {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Inserte el nombre del alumno a eliminar: ");
 		String nombre = sc.nextLine();
-		alumnos.remove(nombre);
-		System.out.println("El alumno se ha eliminado correctamente.");
+		for (int i = 0; i < alumnos.size(); i++) {
+			if (alumnos.get(i).getNombre().equals(nombre)) {
+				alumnos.remove(nombre);
+				System.out.println("El alumno se ha eliminado correctamente.");
+			} else {
+				System.out.println("El alumno " + nombre + " no es miembro de este Aula.");
+			}
+		}
 
 	}
 
@@ -140,9 +151,14 @@ public class AppVoluntarios {
 		System.out.println("Inserte los datos para crear un nuevo Alumno: ");
 		System.out.println("Inserte el nombre: ");
 		String nombre = sc.nextLine();
-		Alumno p = new Alumno(nombre);
-		alumnos.add(p);
-		System.out.println("El alumno se ha creado corectamente.");
+
+		if (!alumnos.contains(nombre)) {
+			alumnos.add(new Alumno(nombre));
+			System.out.println("El alumno se ha creado corectamente.");
+		} else {
+			System.out.println("El alumno " + nombre + " ya pertenece a esta Aula");
+		}
+
 	}
 
 	/**
@@ -151,12 +167,26 @@ public class AppVoluntarios {
 	 */
 	private static void listarAlumnos() {
 
-		for (int i = 1; i < alumnos.size(); i++) {
-			alumnos.get(i-1).compareTo(alumnos.get(i+1));
-			System.out.println("El alumno " + alumnos.get(i).getNombre() + " ha salido voluntario"
-					+ alumnos.get(i).getNumVecesLeer() + " veces.");
+		Collections.sort(alumnos);
+		
+		for (int i = 0; i < alumnos.size(); i++) {
+			System.out.println((i+1)+"El alumno " + alumnos.get(i).getNombre() + " ha salido voluntario "+ alumnos.get(i).getNumVecesLeer() + " veces.");
 		}
-	}
+		
+	/*public int compare(Alumno a1) {
+		return new Integer(a1.getNumVecesLeer()).compareTo(new Integer(a2.getNumVecesLeer()));
+	}*/
 
+	// System.out.println("El alumno " + alumnos.getNombre() + " ha salido
+	// voluntario "
+	// + alumnos.getNumVecesLeer() + " veces.");
+
+	/*
+	 * for (int i = 1; i < alumnos.size(); i++) { compareTo(alumnos[i]);
+	 * alumnos.sort(alumnos.get(i - 1).compareTo(alumnos.get(i));
+	 * alumnos.sort(o1,o2) -> ; alumnos.get(i - 1).compareTo(alumnos.get(i));
+	 */
+
+}
 
 }
