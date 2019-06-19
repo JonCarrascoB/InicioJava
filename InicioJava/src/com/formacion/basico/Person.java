@@ -1,6 +1,6 @@
 package com.formacion.basico;
 
-public class Person {
+public class Person implements IAmigable {
 
 	// Crear un constructor donde la persona por defecto el nombre es anonimo, edad
 	// 18, altura 0, peso 0, ojos marrones, sexo i
@@ -32,6 +32,11 @@ public class Person {
 		this.nombre = nombre;
 		this.edad = edad;
 		this.sexo = sexo;
+	}
+	
+	public Person(String nombre) {
+		this();
+		this.setNombre(nombre);
 	}
 
 	public String getNombre() {
@@ -94,6 +99,11 @@ public class Person {
 	public String toString() {
 		return "El alumno de nombre " + nombre + ", edad " + edad + ", altura " + altura + ", peso " + peso + ", ojos de color "
 				+ ojos + " y sexo " + sexo;
+	}
+
+	@Override
+	public String despedir() {
+		return "Agur";
 	}
 
 }

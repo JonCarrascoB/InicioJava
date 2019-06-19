@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Perro implements Serializable {
 	
+	 String chip; //packaged o friendly
+	
 	private static final long serialVersionUID = 1L;
 	
 	//Atributos privados para construir
@@ -67,6 +69,12 @@ public class Perro implements Serializable {
 	public void setVacunado(boolean vacunado) {
 			this.vacunado = vacunado;		
 	}
+	
+	public final void ladrar() {
+		System.out.println("Guau Guau");
+	}
+	
+
 	
 	
 	@Override

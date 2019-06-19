@@ -12,44 +12,36 @@ import java.util.TreeMap;
 
 public class AppVoluntarios {
 
+	static final int OPCION_LISTAR = 1;
+	static final int OPCION_CREAR = 2;
+	static final int OPCION_ELIMINAR = 3;
+	static final int OPCION_BUSCARVOLUNTARIO = 4;
+	static final int OPCION_EXIT = 5;
+
 	// Declaramos los arrayList que se van a usar en este programa
-	static ArrayList<Person> alumnos = new ArrayList<Person>();
-	static ArrayList<String> ranking = new ArrayList<String>();
+	static ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+	static String ULTIMO_VOLUNTARIO;
+
 	// static HashMap<Integer, String> ranking = new HashMap <Integer, String>();
 
 	public static void main(String[] args) {
 
 		// Insertamos a todos los alumnos de base en el arraylist Alumnos
-		Person p1 = new Person("Mounir", 0, 'h');
-		Person p2 = new Person("Andoni", 0, 'h');
-		Person p3 = new Person("Asier", 0, 'h');
-		Person p4 = new Person("Jon C", 0, 'h');
-		Person p5 = new Person("Arkaitz", 0, 'h');
-		Person p6 = new Person("Aritz", 0, 'h');
-		Person p7 = new Person("Manuel", 0, 'h');
-		Person p8 = new Person("Eduardo", 0, 'h');
-		Person p9 = new Person("Eder I", 0, 'h');
-		Person p10 = new Person("Eder S", 0, 'h');
-		Person p11 = new Person("Gaizka", 0, 'h');
-		Person p12 = new Person("Borja", 0, 'h');
-		Person p13 = new Person("Veronica", 0, 'm');
-		Person p14 = new Person("Jon A", 0, 'h');
-		Person p15 = new Person("Jose Luis", 0, 'h');
-		alumnos.add(p1);
-		alumnos.add(p2);
-		alumnos.add(p3);
-		alumnos.add(p4);
-		alumnos.add(p5);
-		alumnos.add(p6);
-		alumnos.add(p7);
-		alumnos.add(p8);
-		alumnos.add(p9);
-		alumnos.add(p10);
-		alumnos.add(p11);
-		alumnos.add(p12);
-		alumnos.add(p13);
-		alumnos.add(p14);
-		alumnos.add(p15);
+		alumnos.add(new Alumno("Mounir"));
+		alumnos.add(new Alumno("Andoni"));
+		alumnos.add(new Alumno("Asier"));
+		alumnos.add(new Alumno("Jon C"));
+		alumnos.add(new Alumno("Arkaitz"));
+		alumnos.add(new Alumno("Aritz"));
+		alumnos.add(new Alumno("Manuel"));
+		alumnos.add(new Alumno("Eduardo"));
+		alumnos.add(new Alumno("Eder I"));
+		alumnos.add(new Alumno("Eder S"));
+		alumnos.add(new Alumno("Gaizka"));
+		alumnos.add(new Alumno("Borja"));
+		alumnos.add(new Alumno("Veronica"));
+		alumnos.add(new Alumno("Jon A"));
+		alumnos.add(new Alumno("Jose Luis"));
 
 		// iniciamos el programa, cuyo menu se mete en un bucle hasta que el usuario
 		// indica la opcion de salida
@@ -89,19 +81,19 @@ public class AppVoluntarios {
 	 */
 	private static void activarOpciones(int opcion) {
 		switch (opcion) {
-		case 1:
+		case OPCION_LISTAR:
 			listarAlumnos();
 			break;
-		case 2:
+		case OPCION_CREAR:
 			crearAlumno();
 			break;
-		case 3:
+		case OPCION_ELIMINAR:
 			eliminarAlumno();
 			break;
-		case 4:
+		case OPCION_BUSCARVOLUNTARIO:
 			buscarVoluntario();
 			break;
-		case 5:
+		case OPCION_EXIT:
 			System.out.println("Gracias por usar nuestra APP, ADIOS");
 			break;
 		}
@@ -112,19 +104,17 @@ public class AppVoluntarios {
 	 * Metodo para que salga el alumno voluntario de forma random
 	 */
 	private static void buscarVoluntario() {
+		int numero = 0;
 
-		int numero = (int) (Math.random() * alumnos.size());
+		do {
+			numero = (int) (Math.random() * alumnos.size());
+			alumnos.get(numero).setNumVecesLeer(alumnos.get(numero).getNumVecesLeer());
 
-		for (int i = 0; i < alumnos.size(); i++) {
+		} while (ULTIMO_VOLUNTARIO.equals(alumnos.get(numero).getNombre()));
+		ULTIMO_VOLUNTARIO = alumnos.get(numero).getNombre();
 
-			if (numero != i) {
-				System.out.println(i + " " + alumnos.get(i));
-			} else {
-				ranking.add(alumnos.get(i).getNombre());
-				System.out.println(" *** " + alumnos.get(i));
-			}
-		} // end for
-
+		System.out.println("El alumno que es voluntario es: " + alumnos.get(numero).getNombre());
+		// TODO que no se repita el mismo alumno
 	}
 
 	/**
@@ -136,6 +126,7 @@ public class AppVoluntarios {
 		System.out.println("Inserte el nombre del alumno a eliminar: ");
 		String nombre = sc.nextLine();
 		alumnos.remove(nombre);
+		System.out.println("El alumno se ha eliminado correctamente.");
 
 	}
 
@@ -149,12 +140,9 @@ public class AppVoluntarios {
 		System.out.println("Inserte los datos para crear un nuevo Alumno: ");
 		System.out.println("Inserte el nombre: ");
 		String nombre = sc.nextLine();
-		System.out.println("Inserte la edad: ");
-		int edad = Integer.parseInt(sc.nextLine());
-		System.out.println("Inserte el sexo (recuerde h hombre, m mujer, i indefinido: ");
-		char sexo = sc.nextLine().charAt(0);
-		Person p1 = new Person(nombre, edad, sexo);
-		alumnos.add(p1);
+		Alumno p = new Alumno(nombre);
+		alumnos.add(p);
+		System.out.println("El alumno se ha creado corectamente.");
 	}
 
 	/**
@@ -163,24 +151,12 @@ public class AppVoluntarios {
 	 */
 	private static void listarAlumnos() {
 
-		Map<String, Integer> repeticiones = new TreeMap<String, Integer>();
-
-		for (String nombre : ranking) {
-			nombre = nombre.toLowerCase();
-			if (!repeticiones.containsKey(nombre)) {
-				repeticiones.put(nombre, new Integer(1));
-			} else {
-				repeticiones.put(nombre, new Integer(repeticiones.get(nombre).intValue() + 1));
-			}
+		for (int i = 1; i < alumnos.size(); i++) {
+			alumnos.get(i-1).compareTo(alumnos.get(i+1));
+			System.out.println("El alumno " + alumnos.get(i).getNombre() + " ha salido voluntario"
+					+ alumnos.get(i).getNumVecesLeer() + " veces.");
 		}
-		
-		System.out.println("El Ranking de voluntarios es: ");
-		Iterator it = repeticiones.keySet().iterator();
-		while (it.hasNext()) {
-			Object key = it.next();
-			System.out.println("El alumno: "+key+" ha salido voluntario "+repeticiones.get(key)+ " veces.");
-		}
-
 	}
+
 
 }
