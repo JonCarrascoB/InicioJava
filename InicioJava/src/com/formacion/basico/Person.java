@@ -9,6 +9,7 @@ public class Person implements IAmigable {
 
 	
 	// Atributos
+	private int id;
 	private String nombre;
 	private int edad;
 	private float altura; // 1.70cm
@@ -19,6 +20,7 @@ public class Person implements IAmigable {
 	// Constructores
 	public Person() {
 		super(); // java.lang.object
+		this.id = -1;
 		this.nombre = "anonimo";
 		this.edad = 18;
 		this.altura = 0;
@@ -39,6 +41,15 @@ public class Person implements IAmigable {
 		this.setNombre(nombre);
 	}
 
+	//getters y setters
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}
@@ -95,10 +106,12 @@ public class Person implements IAmigable {
 		return "Hola me llamo " + nombre;
 	}
 
+	
+
 	@Override
 	public String toString() {
-		return "El alumno de nombre " + nombre + ", edad " + edad + ", altura " + altura + ", peso " + peso + ", ojos de color "
-				+ ojos + " y sexo " + sexo;
+		return "Person [id=" + id + ", nombre=" + nombre + ", edad=" + edad + ", altura=" + altura + ", peso=" + peso
+				+ ", ojos=" + ojos + ", sexo=" + sexo + "]";
 	}
 
 	@Override

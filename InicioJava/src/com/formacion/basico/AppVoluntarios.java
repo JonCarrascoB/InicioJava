@@ -11,6 +11,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import com.formacion.basico.modelo.DAOAlumnoArrayList;
+
 public class AppVoluntarios {
 
 	static final int OPCION_LISTAR = 1;
@@ -22,11 +24,28 @@ public class AppVoluntarios {
 	// Declaramos los arrayList que se van a usar en este programa
 	static ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
 	static String ULTIMO_VOLUNTARIO;
-
-	// static HashMap<Integer, String> ranking = new HashMap <Integer, String>();
+	static int opcion = 0;
+	static Scanner sc;
 
 	public static void main(String[] args) {
 
+		
+		inicializarLista();
+
+		// iniciamos el programa, cuyo menu se mete en un bucle hasta que el usuario
+		// indica la opcion de salida
+
+		sc = new Scanner(System.in);
+		do {
+
+			pintarOpcionYPedirOpcion();
+
+		} while (opcion != OPCION_EXIT);
+		sc.close();
+
+	}
+
+	private static void inicializarLista() {
 		// Insertamos a todos los alumnos de base en el arraylist Alumnos
 		alumnos.add(new Alumno("Mounir"));
 		alumnos.add(new Alumno("Andoni"));
@@ -44,19 +63,6 @@ public class AppVoluntarios {
 		alumnos.add(new Alumno("Jon A"));
 		alumnos.add(new Alumno("Jose Luis"));
 
-		// iniciamos el programa, cuyo menu se mete en un bucle hasta que el usuario
-		// indica la opcion de salida
-		int opcion;
-		Scanner sc = new Scanner(System.in);
-		do {
-
-			pintarOpcion();
-			opcion = Integer.parseInt(sc.nextLine());
-			activarOpciones(opcion);
-
-		} while (opcion != 5);
-		sc.close();
-
 	}
 
 	// Metodos que son llamados en el programa
@@ -64,7 +70,7 @@ public class AppVoluntarios {
 	/**
 	 * Metodo para que aparezca el menu de opciones en la consola
 	 */
-	public static void pintarOpcion() {
+	public static void pintarOpcionYPedirOpcion() {
 		System.out.println("***************************************************************************");
 		System.out.println("**    Bienvenido a la aplicacion de eleccion de voluntarios para leer    **");
 		System.out.println("**            Introduzca la opcion requerida del 1 al 5:                 **");
@@ -75,6 +81,15 @@ public class AppVoluntarios {
 		System.out.println("**    Inserte la opcion 4 para buscar un voluntario                      **");
 		System.out.println("**    Inserte la opcion 5 para salir de la aplicacion                    **");
 		System.out.println("***************************************************************************");
+
+		
+		try {
+			opcion = Integer.parseInt(sc.nextLine());
+		} catch (Exception e) {
+			System.out.println("Inserte una de las opciones del menu, por favor");
+			pintarOpcionYPedirOpcion();
+		}
+		activarOpciones(opcion);
 
 	}
 
@@ -151,13 +166,8 @@ public class AppVoluntarios {
 		System.out.println("Inserte los datos para crear un nuevo Alumno: ");
 		System.out.println("Inserte el nombre: ");
 		String nombre = sc.nextLine();
-
-		if (!alumnos.contains(nombre)) {
-			alumnos.add(new Alumno(nombre));
-			System.out.println("El alumno se ha creado corectamente.");
-		} else {
-			System.out.println("El alumno " + nombre + " ya pertenece a esta Aula");
-		}
+		alumnos.add(new Alumno (nombre));
+		System.out.println("El alumno ha sido creado correctamente");
 
 	}
 
@@ -168,25 +178,12 @@ public class AppVoluntarios {
 	private static void listarAlumnos() {
 
 		Collections.sort(alumnos);
-		
+
 		for (int i = 0; i < alumnos.size(); i++) {
-			System.out.println((i+1)+"El alumno " + alumnos.get(i).getNombre() + " ha salido voluntario "+ alumnos.get(i).getNumVecesLeer() + " veces.");
+			System.out.println((i + 1) + " El alumno " + alumnos.get(i).getNombre() + " ha salido voluntario "
+					+ alumnos.get(i).getNumVecesLeer() + " veces.");
 		}
-		
-	/*public int compare(Alumno a1) {
-		return new Integer(a1.getNumVecesLeer()).compareTo(new Integer(a2.getNumVecesLeer()));
-	}*/
 
-	// System.out.println("El alumno " + alumnos.getNombre() + " ha salido
-	// voluntario "
-	// + alumnos.getNumVecesLeer() + " veces.");
-
-	/*
-	 * for (int i = 1; i < alumnos.size(); i++) { compareTo(alumnos[i]);
-	 * alumnos.sort(alumnos.get(i - 1).compareTo(alumnos.get(i));
-	 * alumnos.sort(o1,o2) -> ; alumnos.get(i - 1).compareTo(alumnos.get(i));
-	 */
-
-}
+	}
 
 }
