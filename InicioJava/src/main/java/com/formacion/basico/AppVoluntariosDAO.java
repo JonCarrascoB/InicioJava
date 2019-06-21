@@ -49,16 +49,18 @@ public class AppVoluntariosDAO {
 	 * Metodo para que aparezca el menu de opciones en la consola
 	 */
 	public static void pintarOpcionYPedirOpcion() {
+		System.out.println("");
 		System.out.println("***************************************************************************");
 		System.out.println("**    Bienvenido a la aplicacion de eleccion de voluntarios para leer    **");
-		System.out.println("**            Introduzca la opcion requerida del 1 al 5:                 **");
+		System.out.println("**                                                                       **");
 		System.out.println("***************************************************************************");
-		System.out.println("**    Inserte la opcion 1 para listar los alumnos segun el Ranking.      **");
-		System.out.println("**    Inserte la opcion 2 para crear un alumno.                          **");
-		System.out.println("**    Inserte la opcion 3 para eliminar un alumno.                       **");
-		System.out.println("**    Inserte la opcion 4 para buscar un voluntario                      **");
-		System.out.println("**    Inserte la opcion 5 para salir de la aplicacion                    **");
+		System.out.println("**    1. Listar los alumnos segun el Ranking.                            **");
+		System.out.println("**    2. Crear un alumno.                                                **");
+		System.out.println("**    3. Eliminar un alumno.                                             **");
+		System.out.println("**    4. Buscar un voluntario                                            **");
+		System.out.println("**    5. Salir de la aplicacion                                          **");
 		System.out.println("***************************************************************************");
+		System.out.println("");
 
 		try {
 			opcion = Integer.parseInt(sc.nextLine());
