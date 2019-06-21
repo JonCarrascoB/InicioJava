@@ -1,4 +1,4 @@
-package com.formacion.basico;
+
 
 import static org.junit.Assert.*;
 
@@ -9,11 +9,13 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.formacion.basico.Youtube;
+
 public class YoutubeTest {
 
 	Youtube youtube;
 	static final String TITULO = "AC/DC";
-	static final String CODIGO = "7452pl74kñ9";
+	static final String CODIGO = "7452pl74kï¿½9";
 	static final int REPRODUCCIONES = 789000;
 
 	@BeforeClass

@@ -1,4 +1,4 @@
-package com.formacion.basico;
+
 
 import static org.junit.Assert.*;
 
@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import org.junit.Test;
+
+import com.formacion.basico.Alumno;
+import com.formacion.basico.ComparatorNombre;
 
 public class AlumnoTest {
 
