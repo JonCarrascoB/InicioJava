@@ -406,12 +406,17 @@ public class AppVoluntariosDAO {
 	 */
 	private static void listarAlumnos() {
 
-		ArrayList<Alumno> lista = (ArrayList<Alumno>) dao.getAll();
-		Collections.sort(lista);
-
-		for (Alumno alumno : lista) {
-			System.out.println("El alumno " + alumno.getNombre() + " ha salido voluntario " + alumno.getNumVecesLeer()
-					+ " veces.");
+		//ArrayList<Alumno> lista = (ArrayList<Alumno>) dao.getAll();
+		System.out.println("***********************************");
+		System.out.println("**       Listado de Alumnos      **");
+		System.out.println("***********************************");
+		System.out.println("**   ID        Nombre  Nº Veces  **");
+		
+		
+		Collections.sort(dao.getAll());
+		
+		for (Alumno alumno : dao.getAll()) {
+			System.out.printf("%6s %14s %2s \n", alumno.getId(),alumno.getNombre(),alumno.getNumVecesLeer());
 		}
 
 	}

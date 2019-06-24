@@ -18,7 +18,7 @@ public class FicheroEjemplo {
 		oos.writeObject(new Person("MAnolito"));
 		oos.flush();
 
-		// TODO leer objketo del fichero
+		// TODO leer objeto del fichero
 		// @see http://www.chuidiang.org/java/ficheros/ObjetosFichero.php
 
 		String lineaSimulada = "1;Manolo;12;verdes;mucho";

@@ -1,6 +1,8 @@
 package com.formacion.basico;
 
-public class Person implements IAmigable {
+import java.io.Serializable;
+
+public class Person implements IAmigable, Serializable {
 
 	// Crear un constructor donde la persona por defecto el nombre es anonimo, edad
 	// 18, altura 0, peso 0, ojos marrones, sexo i

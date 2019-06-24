@@ -11,7 +11,7 @@ public class DAOAlumnoArrayList implements IPersistible<Alumno> {
 	private ArrayList<Alumno> lista;
 
 	/**
-	 * encargado de sdevolver solo un objeto, patron SINGLETON
+	 * encargado de devolver solo un objeto, patron SINGLETON
 	 * 
 	 * @return
 	 */
@@ -29,23 +29,27 @@ public class DAOAlumnoArrayList implements IPersistible<Alumno> {
 	private DAOAlumnoArrayList() {
 		super();
 		this.lista = new ArrayList<Alumno>();
-		
-		 lista.add(new Alumno(1, "Mounir"));
-		 lista.add(new Alumno(2, "Andoni"));
-		 lista.add(new Alumno(3, "Asier"));
-		 lista.add(new Alumno(4, "Jon C"));
-		 lista.add(new Alumno(5, "Arkaitz"));
-		 lista.add(new Alumno(6, "Aritz"));
-		 lista.add(new Alumno(7, "Manuel"));
-		 lista.add(new Alumno(8, "Eduardo"));
-		 lista.add(new Alumno(9, "Eder I"));
-		 lista.add(new Alumno(10, "Eder S"));
-		 lista.add(new Alumno(11, "Gaizka"));
-		 lista.add(new Alumno(12, "Borja"));
-		 lista.add(new Alumno(13, "Veronica"));
-		 lista.add(new Alumno(14, "Jon A"));
-		 lista.add(new Alumno(15, "Jose Luis"));
-		 
+		mockAlumnos();
+
+	}
+
+	private void mockAlumnos() {
+
+		lista.add(new Alumno(1, "Mounir"));
+		lista.add(new Alumno(2, "Andoni"));
+		lista.add(new Alumno(3, "Asier"));
+		lista.add(new Alumno(4, "Jon C"));
+		lista.add(new Alumno(5, "Arkaitz"));
+		lista.add(new Alumno(6, "Aritz"));
+		lista.add(new Alumno(7, "Manuel"));
+		lista.add(new Alumno(8, "Eduardo"));
+		lista.add(new Alumno(9, "Eder I"));
+		lista.add(new Alumno(10, "Eder S"));
+		lista.add(new Alumno(11, "Gaizka"));
+		lista.add(new Alumno(12, "Borja"));
+		lista.add(new Alumno(13, "Veronica"));
+		lista.add(new Alumno(14, "Jon A"));
+		lista.add(new Alumno(15, "Jose Luis"));
 	}
 
 	@Override
@@ -67,9 +71,11 @@ public class DAOAlumnoArrayList implements IPersistible<Alumno> {
 
 	@Override
 	public boolean insert(Alumno alumno) {
-
-		return lista.add(alumno);
-
+		boolean resul = false;
+		if (alumno != null) {
+			resul = lista.add(alumno);
+		}
+		return resul;
 	}
 
 	@Override
@@ -82,7 +88,7 @@ public class DAOAlumnoArrayList implements IPersistible<Alumno> {
 	@Override
 	public boolean update(Alumno alumno) {
 		boolean resul = false;
-		
+
 		if (alumno != null) {
 			for (Alumno a : lista) {
 				if (a.getId() == alumno.getId()) {

@@ -30,6 +30,11 @@ public class DAOAlumnoArrayListTest {
 
 	@After
 	public void tearDown() throws Exception {
+		
+		//borrar objetos de la lista
+		for (int i = 0; i < dao.getAll().size(); i++) {
+			dao.delete(dao.getAll().get(i).getId());
+		}
 		dao = null;
 	}
 

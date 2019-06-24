@@ -1,6 +1,8 @@
 package com.formacion.basico;
 
-public class Alumno extends Person implements Comparable<Alumno> {
+import java.io.Serializable;
+
+public class Alumno extends Person implements Comparable<Alumno>, Serializable {
 	
 	private int numVecesLeer;
 
