@@ -33,8 +33,8 @@ public class DAOAlumnoVolFicheros implements IPersistible<Alumno>, Serializable 
 	 * encargado de devolver solo un objeto, patron SINGLETON
 	 * 
 	 * @return
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
 	public static synchronized DAOAlumnoVolFicheros getInstance() throws FileNotFoundException, IOException {
 
@@ -46,50 +46,44 @@ public class DAOAlumnoVolFicheros implements IPersistible<Alumno>, Serializable 
 
 	/**
 	 * privado para que nadie pueda crear objetos
-	 * @throws IOException 
-	 * @throws FileNotFoundException 
+	 * 
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
-	private DAOAlumnoVolFicheros() throws FileNotFoundException, IOException {
+	private DAOAlumnoVolFicheros() {
 
 		super();
 		this.lista = new ArrayList<Alumno>();
-		serializarLista();
+		
 		desSelizarLista();
-		
-		oos.writeObject(new Alumno(1, "Mounir"));
-		oos.writeObject(new Alumno(2, "Andoni"));
-		oos.writeObject(new Alumno(3, "Asier"));
-		oos.writeObject(new Alumno(4, "Jon C"));
-		oos.flush();
-		
-		oos.close();
+
 	}
 
 	private void desSelizarLista() {
-		
-		try {
+
+		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(ficheroAlumnos))) {
+
 			lista = (ArrayList<Alumno>) ois.readObject();
-		} catch (ClassNotFoundException e) {
-			
-			e.printStackTrace();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
+
+		} catch (Exception e) {
+			// e.printStackTrace(); EOF
 		}
-		
+
 	}
 
 	private void serializarLista() {
-		oos= new ObjectOutputStream(new FileOutputStream(ficheroAlumnos));
-		oos = writeObject(lista);
-		oos.flush();
-		oos.close();
-		
+		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(ficheroAlumnos))) {
+			oos.writeObject(lista);
+			oos.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	@Override
 	public List<Alumno> getAll() {
-		
+
 		return lista;
 	}
 
@@ -106,31 +100,44 @@ public class DAOAlumnoVolFicheros implements IPersistible<Alumno>, Serializable 
 	}
 
 	@Override
-	public boolean insert(Alumno a) {
+	public boolean insert(Alumno alumno) {
 		boolean resul = false;
 		if (alumno != null) {
 			resul = lista.add(alumno);
+			if (resul) {
+				serializarLista();
+			}
+
 		}
 		return resul;
 	}
 
 	@Override
 	public boolean delete(int id) {
-		
-		Alumno resul = getById(id);
-		return lista.remove(resul);
+
+		boolean resul = false;
+		Alumno a = getById(id);
+		resul = lista.remove(a);
+		if (resul) {
+			serializarLista();
+		}
+		return resul;
 	}
 
 	@Override
-	public boolean update(Alumno a) {
+	public boolean update(Alumno alumno) {
 		boolean resul = false;
 
 		if (alumno != null) {
+
 			for (Alumno a : lista) {
+
 				if (a.getId() == alumno.getId()) {
+					// modificar
 					int pos = lista.indexOf(a);
 					lista.set(pos, alumno);
 					resul = true;
+					serializarLista();
 					break;
 				}
 			}
